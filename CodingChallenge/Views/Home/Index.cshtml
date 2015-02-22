@@ -1,0 +1,22 @@
+﻿
+@model CodingChallenge.Models.CustomerInfo
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>TeraRecon Coding Challange</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form action="@Url.Action("Showresults","Home")" method="post">
+           <strong>CustomerID</strong>   <input type="radio" name="Id" value="customerId"> <br><br />
+            <strong>GroupID</strong>  <input type="radio" name="Id" value="groupId" checked> <br><br />
+            <strong>ItemID</strong>  <input type="radio" name="Id" value="itemId"><br />
+            <br>
+            <strong>Enter The ID</strong>  <input type="text" name="Enter" value=""  required="required"/><br /><br />
+            <input type="submit" value="Submit" />
+            </form>
+</div>
+</div>

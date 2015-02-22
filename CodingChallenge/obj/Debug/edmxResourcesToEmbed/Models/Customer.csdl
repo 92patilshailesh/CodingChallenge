@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CustomerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CustomerInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="customerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="GroupInfoes" Relationship="Self.FK_GroupInfo_CustomerInfo" FromRole="CustomerInfo" ToRole="GroupInfo" />
+  </EntityType>
+  <EntityType Name="GroupInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="customerId" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="CustomerInfo" Relationship="Self.FK_GroupInfo_CustomerInfo" FromRole="GroupInfo" ToRole="CustomerInfo" />
+    <NavigationProperty Name="ItemInfoes" Relationship="Self.FK_ItemInfo_GroupInfo" FromRole="GroupInfo" ToRole="ItemInfo" />
+  </EntityType>
+  <EntityType Name="ItemInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="groupId" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="GroupInfo" Relationship="Self.FK_ItemInfo_GroupInfo" FromRole="ItemInfo" ToRole="GroupInfo" />
+  </EntityType>
+  <Association Name="FK_GroupInfo_CustomerInfo">
+    <End Role="CustomerInfo" Type="Self.CustomerInfo" Multiplicity="1" />
+    <End Role="GroupInfo" Type="Self.GroupInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GroupInfo">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ItemInfo_GroupInfo">
+    <End Role="GroupInfo" Type="Self.GroupInfo" Multiplicity="1" />
+    <End Role="ItemInfo" Type="Self.ItemInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GroupInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ItemInfo">
+        <PropertyRef Name="groupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CustomerEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CustomerInfoes" EntityType="Self.CustomerInfo" />
+    <EntitySet Name="GroupInfoes" EntityType="Self.GroupInfo" />
+    <EntitySet Name="ItemInfoes" EntityType="Self.ItemInfo" />
+    <AssociationSet Name="FK_GroupInfo_CustomerInfo" Association="Self.FK_GroupInfo_CustomerInfo">
+      <End Role="CustomerInfo" EntitySet="CustomerInfoes" />
+      <End Role="GroupInfo" EntitySet="GroupInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ItemInfo_GroupInfo" Association="Self.FK_ItemInfo_GroupInfo">
+      <End Role="GroupInfo" EntitySet="GroupInfoes" />
+      <End Role="ItemInfo" EntitySet="ItemInfoes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

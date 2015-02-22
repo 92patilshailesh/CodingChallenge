@@ -1,0 +1,85 @@
+﻿@model CodingChallenge.ViewModel.CGI
+@{
+    ViewBag.Title = "Showresults";
+}
+
+<h2>Showresults</h2>
+
+    <div>
+        @if(Model.customerInfo!=null)
+        { 
+            <h3>CustomerId : @Model.customerInfo.Id   Customer Name :  @Model.customerInfo.customerName</h3><br />
+        
+        foreach (var item in Model.customerInfo.GroupInfoes)
+        {
+            if(item!=null)
+            { 
+                <h3>@Model.customerInfo.customerName is in group : @item.name  with id @item.Id</h3>
+            
+                <h3>Item name for groupId @item.Id :</h3>
+          
+            foreach (var itemInfo in item.ItemInfoes)
+            {
+                
+                if(itemInfo!=null)
+                {
+                   <h3>Name: @itemInfo.name with id @itemInfo.Id</h3>
+                    
+                }
+                
+                else { 
+                    <h3> No item information !!! </h3><br />
+                }
+                 
+            }
+            <br />
+            }
+            else { <h3>No group or item information for @Model.customerInfo.customerName</h3>}
+             
+        }
+        }
+        
+        
+    </div>
+
+<div>
+    @if(Model.groupInfo!=null)
+    { 
+        <h3>GroupId : @Model.groupInfo.Id  Group Name : @Model.groupInfo.name and Customer name : @Model.groupInfo.CustomerInfo.customerName</h3>
+    <br />
+        <h3>Item information for group @Model.groupInfo.name:</h3>
+    foreach (var item in Model.groupInfo.ItemInfoes)
+    {
+        if(item!=null)
+        { 
+        <h3> Name : @item.name with id @item.Id</h3>
+    }
+        else {
+            <h3>No item information for group </h3> 
+        }
+    }
+    
+    }
+    
+    
+</div>
+
+<div>
+    @if (Model.itemInfo != null)
+    {
+        <h3>Item Id : @Model.itemInfo.Id<br />
+        Item name : @Model.itemInfo.name <br />
+        Group Name : @Model.itemInfo.GroupInfo.name<br />
+        Customer Name : @Model.itemInfo.GroupInfo.CustomerInfo.customerName</h3>
+               
+    }
+    @if (Model.groupInfo == null && Model.itemInfo == null && Model.customerInfo == null)
+    {
+        <h2>Wrong Id entered. Please search again.</h2> 
+    }
+    
+
+</div>
+
+
+
